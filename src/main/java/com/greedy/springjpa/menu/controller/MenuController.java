@@ -1,5 +1,6 @@
 package com.greedy.springjpa.menu.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -114,5 +115,18 @@ public class MenuController {
 		return "/menu/list";
 	}
 	
+	/* 오늘의 메뉴 추천받기 */
+	@GetMapping("/recommend")
+	public String recommendPage(Model model) {
+		
+		List<MenuDTO> menuList = menuService.findAllMenu();
+		
+		Collections.shuffle(menuList); // shuffle() 메소드로 menuList 안에 있는 값 랜덤으로 재배치
+		List<MenuDTO> recommendedMenulist = menuList.subList(0, 5); // subList() 메소드로 0부터 4번 인덱스까지만 추출
+		
+		model.addAttribute("menuList", recommendedMenulist);
+		
+		return "/menu/list";
+	}
 
 }
