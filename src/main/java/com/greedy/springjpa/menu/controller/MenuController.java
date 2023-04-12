@@ -1,5 +1,7 @@
 package com.greedy.springjpa.menu.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,7 @@ public class MenuController {
 		this.menuService = menuService;
 	}
 	
+	/* 메뉴 코드로 해당 메뉴 조회하기 */
 	@GetMapping("/{menuCode}")
 	public String findMenuByCode(@PathVariable int menuCode, Model model) {
 		
@@ -28,5 +31,16 @@ public class MenuController {
 		model.addAttribute("menu", menu);
 		
 		return "menu/one";
+	}
+	
+	/* 모든 메뉴 리스트 조회하기 */
+	@GetMapping("/list")
+	public String findAllMenu(Model model) {
+		
+		List<MenuDTO> menuList = menuService.findAllMenu();
+		
+		model.addAttribute("menuList", menuList);
+		
+		return "menu/list";
 	}
 }

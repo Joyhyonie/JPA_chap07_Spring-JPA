@@ -2,10 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>one</title>
+<title>list</title>
 </head>
 <body>
-
 	<table border="1">
 		<tr>
 			<th>메뉴번호</th>
@@ -14,7 +13,7 @@
 			<th>카테고리코드</th>
 			<th>판매상태</th>
 		</tr>
-		<tr>
+		<tr th:each="menu : ${ menuList }">
 			<td th:text="${ menu.menuCode }"></td>
 			<td th:text="${ menu.menuName }"></td>
 			<td th:text="${ menu.menuPrice }"></td>
@@ -22,6 +21,5 @@
 			<td th:text="${ menu.orderableStatus }"></td>
 		</tr>
 	</table>
-	
 </body>
 </html>
