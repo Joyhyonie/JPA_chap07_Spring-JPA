@@ -48,7 +48,7 @@ public class MenuController {
 		return "menu/list";
 	}
 	
-	/* 메뉴 입력하기를 위한 화면 전환 */
+	/* '메뉴 등록하기'를 위한 화면 전환 */
 	@GetMapping("/regist")
 	public void registPage() {}
 	
@@ -73,7 +73,7 @@ public class MenuController {
 	@GetMapping("/modify")
 	public void modifyPage() {}
 	
-	/* 메뉴명 수정하기 */
+	/* 메뉴 수정하기 */
 	@PostMapping("/modify")
 	public String menuModify(@ModelAttribute MenuDTO menu) {
 		
@@ -83,6 +83,9 @@ public class MenuController {
 		return "redirect:/menu/" + menu.getMenuCode();
 	}
 	
+	/* 메뉴 삭제하기 */
+	
+	/* 메뉴 검색하기 */
 	
 	
 	

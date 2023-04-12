@@ -27,7 +27,7 @@ public class MenuRepository {
 		return entityManager.createQuery(jpql, Menu.class).getResultList();
 	}
 	
-	/* '메뉴 입력하기'에서 필요한 카테고리 리스트 조회하기(ajax) */
+	/* '메뉴 등록하기'에서 필요한 카테고리 리스트 조회하기(ajax) */
 	public List<Category> findAllCategory(EntityManager entityManager) {
 		
 		String jpql = "SELECT c FROM Category AS c ORDER BY c.categoryCode ASC";
@@ -35,24 +35,32 @@ public class MenuRepository {
 		return entityManager.createQuery(jpql, Category.class).getResultList();
 	}
 	
-	/* 메뉴 입력하기 */
+	/* 메뉴 등록하기 */
 	public void registNewMenu(EntityManager entityManager, Menu menu) {
 		
 		/* entityManager야, 영속성 컨텍스트에 menu를 저장하고 관리해주렴! */
 		entityManager.persist(menu);
 	}
 	
-	/* 메뉴명 수정하기 */
+	/* 메뉴 수정하기 */
 	public void modifyMenu(EntityManager entityManager, Menu menu) {
 		
-		/* menu : 클라이언트로부터 입력받은 menuCode와 menuName이 넘어옴 */
+		/* menu : 클라이언트로부터 입력받은 menuCode, menuName, menuPrice, categoryCode, orderableStatus가 넘어옴 */
+		System.out.println(menu);
 		
 		/* 전달 받은 메뉴 정보를 통해 해당 엔티티를 먼저 조회 */
 		Menu selectedMenu = entityManager.find(Menu.class, menu.getMenuCode());
+		
 		/* 조회된 메뉴 객체를 수정 */
 		selectedMenu.setMenuName(menu.getMenuName());
-		
+		selectedMenu.setMenuPrice(menu.getMenuPrice());
+		selectedMenu.setCategoryCode(menu.getCategoryCode());
+		selectedMenu.setOrderableStatus(menu.getOrderableStatus());
 	}
+	
+	/* 메뉴 삭제하기 */
+	
+	/* 메뉴 검색하기 */
 	
 	
 	

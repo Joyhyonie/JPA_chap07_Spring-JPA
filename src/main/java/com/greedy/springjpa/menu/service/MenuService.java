@@ -74,7 +74,7 @@ public class MenuService {
 	 * 어노테이션이 선언되면 메소드 호출 시 자동으로 프록시 객체(가로채는 객체)가 생성되며 해당 프록시 객체는 정상 수행 여부에 따라
 	 * commit, rollback 처리를 함 */
 	
-	/* 메뉴 입력하기 */
+	/* 메뉴 등록하기 */
 	@Transactional
 	public void registNewMenu(MenuDTO newMenu) {
 		
@@ -82,12 +82,16 @@ public class MenuService {
 		menuRepository.registNewMenu(entityManager, modelMapper.map(newMenu, Menu.class));
 	}
 	
-	/* 메뉴명 수정하기 */
+	/* 메뉴 수정하기 */
 	@Transactional
 	public void modifyMenu(MenuDTO menu) {
 		
 		menuRepository.modifyMenu(entityManager, modelMapper.map(menu, Menu.class));
 	}
+	
+	/* 메뉴 삭제하기 */
+	
+	/* 메뉴 검색하기 */
 	
 	
 	

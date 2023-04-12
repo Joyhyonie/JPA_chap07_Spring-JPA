@@ -3,18 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <title>modify here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <body>
 
-	<h3 align="center">메뉴명 수정</h3>
+	<h3 align="center">메뉴 수정</h3>
 	
-	<form action="/menu/modify" method="post">
+	<form align="center" action="/menu/modify" method="post">
 		<label>수정할 메뉴 번호 : </label>
 		<input type="number" name="menuCode"><br>
 		<label>새로운 메뉴 이름 : </label>
 		<input type="text" name="menuName"><br>
+		<label>새로운 메뉴 가격 : </label>
+		<input type="number" name="menuPrice"><br>
+		<label>새로운 메뉴의 카테고리 : </label>
+		<select name="categoryCode" id="categoryCode"></select><br>
+		<label>판매 상태 : </label>
+		<select name="orderableStatus">
+			<option value="Y">판매가능</option>
+			<option value="N">판매불가</option>
+		</select><br>
 		<input type="submit" value="전송">
 	</form>
+	
+	<script>
+		/* 비동기 통신(ajax)을 통해 모든 카테고리 리스트 조회 */
+		$(function(){
+			$.ajax({
+				url : '/menu/category',
+				success : function(data) {
+					console.log(data);
+					
+					let html = '';
+					/* data라는 조회된 배열을 반복하여 합산시키기 */
+					for(let index in data) {
+						html += `<option value='${data[index].categoryCode}'>${data[index].categoryName}</option>`;
+						// 조회된 카테고리의 이름을 화면에 노출시키고 그 카테고리가 선택(<option>)되면 value는 해당 카테고리의 코드
+					}
+					/* 그 값을 <select>에 insert하여 화면에 노출되도록 함 */
+					document.querySelector("#categoryCode").insertAdjacentHTML('beforeend', html);
+					
+				},
+				error : function(xhr) {
+					console.log(xhr);
+				}
+			});
+		})
+	</script>
 
 </body>
 </html>
