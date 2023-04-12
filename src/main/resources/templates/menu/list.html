@@ -25,5 +25,12 @@
 			<td th:text="${ menu.orderableStatus }"></td>
 		</tr>
 	</table>
+	
+	<script>
+	/* 신규 메뉴 등록 or 메뉴 삭제 후, 해당 페이지로 redirect 되기 전 alert 띄우기 */
+	if(window.location.hash === '#menu-regist' || window.location.hash === '#menu-remove'){
+	    alert('[[${message}]]'); // message 변수는 컨트롤러에서 전달한 Flash Attribute
+	}
+	</script>
 </body>
 </html>

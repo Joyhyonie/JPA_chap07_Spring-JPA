@@ -1,6 +1,6 @@
 package com.greedy.springjpa.menu.controller;
 
-import java.util.Collections;
+import java.util.Collections; 
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.greedy.springjpa.menu.dto.CategoryDTO;
 import com.greedy.springjpa.menu.dto.MenuDTO;
@@ -64,11 +65,13 @@ public class MenuController {
 	
 	/* 메뉴 등록하기 */
 	@PostMapping("/regist")
-	public String registNewMenu(@ModelAttribute MenuDTO newMenu) { /* @ModelAttribute는 생략되어도 정상 동작하지만 명시 */
+	public String registNewMenu(@ModelAttribute MenuDTO newMenu, RedirectAttributes rttr) { /* @ModelAttribute는 생략되어도 정상 동작하지만 명시 */
 		
 		menuService.registNewMenu(newMenu);
 		
-		return "redirect:/menu/list";
+		rttr.addFlashAttribute("message", "메뉴 등록 성공! 등록된 메뉴를 확인하세요 🥳");
+		
+		return "redirect:/menu/list#menu-regist";
 	}
 	
 	/* 메뉴 수정하기 */
@@ -76,12 +79,14 @@ public class MenuController {
 	public void modifyPage() {}
 	
 	@PostMapping("/modify")
-	public String menuModify(@ModelAttribute MenuDTO menu) {
+	public String menuModify(@ModelAttribute MenuDTO menu, RedirectAttributes rttr) {
 		
 		menuService.modifyMenu(menu);
 		
+		rttr.addFlashAttribute("message", "메뉴 수정 성공! 수정된 메뉴를 확인하세요 😍");
+		
 		/* 수정된 메뉴의 상세페이지로 이동 */
-		return "redirect:/menu/" + menu.getMenuCode();
+		return "redirect:/menu/" + menu.getMenuCode() + "#menu-modify";
 	}
 	
 	/* 메뉴 삭제하기 */
@@ -97,11 +102,13 @@ public class MenuController {
 	}
 	
 	@PostMapping("/remove")
-	public String menuRemove(@ModelAttribute MenuDTO menu) {
+	public String menuRemove(@ModelAttribute MenuDTO menu, RedirectAttributes rttr) {
 		
 		menuService.removeMenu(menu);
 		
-		return "redirect:/menu/list";
+		rttr.addFlashAttribute("message", "메뉴 삭제 성공! 👋");
+		
+		return "redirect:/menu/list#menu-remove";
 	}
 	
 	/* 메뉴 검색하기 */
