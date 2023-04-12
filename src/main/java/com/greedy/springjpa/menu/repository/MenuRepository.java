@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
 
+import com.greedy.springjpa.menu.entity.Category;
 import com.greedy.springjpa.menu.entity.Menu;
 
 @Repository
@@ -26,6 +27,13 @@ public class MenuRepository {
 		return entityManager.createQuery(jpql, Menu.class).getResultList();
 	}
 	
+	/* '메뉴 입력하기'에서 필요한 카테고리 리스트 조회하기(ajax) */
+	public List<Category> findAllCategory(EntityManager entityManager) {
+		
+		String jpql = "SELECT c FROM Category AS c ORDER BY c.categoryCode ASC";
+				
+		return entityManager.createQuery(jpql, Category.class).getResultList();
+	}
 	
 	
 	

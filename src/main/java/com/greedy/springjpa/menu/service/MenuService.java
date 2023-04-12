@@ -9,7 +9,9 @@ import javax.persistence.PersistenceContext;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import com.greedy.springjpa.menu.dto.CategoryDTO;
 import com.greedy.springjpa.menu.dto.MenuDTO;
+import com.greedy.springjpa.menu.entity.Category;
 import com.greedy.springjpa.menu.entity.Menu;
 import com.greedy.springjpa.menu.repository.MenuRepository;
 
@@ -45,7 +47,7 @@ public class MenuService {
 		
 		return menuList.stream().map(menu -> modelMapper.map(menu, MenuDTO.class)).collect(Collectors.toList());
 		/* menu : Menu 엔티티 객체들
-		 * stream의 map()은 괄호 안의 동작을 수행하고 나서 가공된 결과를 반환 
+		 * stream의 map()은 괄호 안의 동작을 하나하나 수행하고 나서 가공된 결과를 반환 
 		 * collect(Collectors.toList() : 다시 stream을 List 형태로 변환 */
 		
 		/* 
@@ -54,5 +56,12 @@ public class MenuService {
 		 * 2. menu라는 Menu 엔티티 객체들을 modelMapper의 map()메소드를 통해 MenuDTO 타입으로 변환
 		 * 3. 다시 stream을 List형태로 변환
 		 */
+	}
+	
+	public List<CategoryDTO> findAllCategory() {
+		
+		List<Category> categoryList = menuRepository.findAllCategory(entityManager);
+		
+		return categoryList.stream().map(category -> modelMapper.map(category, CategoryDTO.class)).collect(Collectors.toList());
 	}
 }
