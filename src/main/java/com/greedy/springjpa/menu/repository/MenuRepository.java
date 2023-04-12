@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
 
+import com.greedy.springjpa.menu.dto.MenuDTO;
 import com.greedy.springjpa.menu.entity.Category;
 import com.greedy.springjpa.menu.entity.Menu;
 
@@ -57,10 +58,24 @@ public class MenuRepository {
 		selectedMenu.setCategoryCode(menu.getCategoryCode());
 		selectedMenu.setOrderableStatus(menu.getOrderableStatus());
 	}
-	
+
 	/* 메뉴 삭제하기 */
-	
+	public void removeMenu(EntityManager entityManager, Menu menu) {
+		
+		/* 전달 받은 메뉴 정보를 통해 해당 엔티티를 먼저 조회 */
+		Menu selectedMenu = entityManager.find(Menu.class, menu.getMenuCode());
+		
+		entityManager.remove(selectedMenu);
+	}
+
 	/* 메뉴 검색하기 */
+	public List<Menu> searchMenu(EntityManager entityManager, String keyword) {
+		
+		String jpql = "SELECT m FROM Menu AS m WHERE m.menuName LIKE :keyword ORDER BY m.menuCode ASC";
+		
+		return entityManager.createQuery(jpql, Menu.class).setParameter("keyword", "%"+keyword+"%").getResultList();
+	}
+
 	
 	
 	

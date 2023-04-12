@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.greedy.springjpa.menu.dto.CategoryDTO;
@@ -60,7 +61,7 @@ public class MenuController {
 		return menuService.findAllCategory();
 	}
 	
-	/* 메뉴 입력하기 */
+	/* 메뉴 등록하기 */
 	@PostMapping("/regist")
 	public String registNewMenu(@ModelAttribute MenuDTO newMenu) { /* @ModelAttribute는 생략되어도 정상 동작하지만 명시 */
 		
@@ -69,11 +70,10 @@ public class MenuController {
 		return "redirect:/menu/list";
 	}
 	
-	/* '메뉴 수정하기'를 위한 화면 전환 */
+	/* 메뉴 수정하기 */
 	@GetMapping("/modify")
 	public void modifyPage() {}
 	
-	/* 메뉴 수정하기 */
 	@PostMapping("/modify")
 	public String menuModify(@ModelAttribute MenuDTO menu) {
 		
@@ -84,19 +84,35 @@ public class MenuController {
 	}
 	
 	/* 메뉴 삭제하기 */
+	@GetMapping("/remove")
+	public void removePage() {}
+	
+	/* 메뉴 리스트를 조회하는 비동기 통신(ajax) */
+	@GetMapping(value="menu", produces="application/json; charset=UTF-8")
+	@ResponseBody /* 반환하는 값이 곧 응답되는 값의 바디 */
+	public List<MenuDTO> findMenuList() {
+		
+		return menuService.findAllMenu();
+	}
+	
+	@PostMapping("/remove")
+	public String menuRemove(@ModelAttribute MenuDTO menu) {
+		
+		menuService.removeMenu(menu);
+		
+		return "redirect:/menu/list";
+	}
 	
 	/* 메뉴 검색하기 */
+	@GetMapping("/search")
+	public String searchedPage(@RequestParam(value="keyword", required=false) String keyword, Model model) {
+		
+		List<MenuDTO> menuList = menuService.searchMenu(keyword);
+		
+		model.addAttribute("menuList", menuList);
+		
+		return "/menu/list";
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

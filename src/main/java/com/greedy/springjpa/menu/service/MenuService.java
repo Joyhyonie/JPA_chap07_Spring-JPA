@@ -88,18 +88,21 @@ public class MenuService {
 		
 		menuRepository.modifyMenu(entityManager, modelMapper.map(menu, Menu.class));
 	}
-	
+
 	/* 메뉴 삭제하기 */
-	
+	@Transactional
+	public void removeMenu(MenuDTO menu) {
+		
+		menuRepository.removeMenu(entityManager, modelMapper.map(menu, Menu.class));
+	}
+
 	/* 메뉴 검색하기 */
+	public List<MenuDTO> searchMenu(String keyword) {
+		
+		List<Menu> menuList = menuRepository.searchMenu(entityManager, keyword);
+		
+		return menuList.stream().map(menu -> modelMapper.map(menu, MenuDTO.class)).collect(Collectors.toList());
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

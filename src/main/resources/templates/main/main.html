@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>main</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <style>
 button { border:none; border-radius:20px; padding:10px 20px; font-size:20px; font-weight:bolder; color:white; background-color:#fdd5a5; cursor:pointer;}
 button:hover { color: #fc900c; }
@@ -18,8 +19,23 @@ button:hover { color: #fc900c; }
 	<button onclick="location.href='/menu/regist'">메뉴 등록하기</button>
 	<button onclick="location.href='/menu/modify'">메뉴 수정하기</button>
 	<button onclick="location.href='/menu/remove'">메뉴 삭제하기</button>
-	<button onclick="location.href='/menu/search'">메뉴 검색하기</button>
+	<button onclick="searchMenu()">메뉴 검색하기</button>
 	</div>
+	
+	<script>
+		/* 입력된 키워드로 검색한 결과를 화면에 조회시키기 */
+		function searchMenu() {
+			
+			const keyword = prompt('키워드를 입력해주세요 🥳')
+			
+			if(keyword !== null && keyword.trim().length !== 0) {
+				console.log(keyword);
+				window.location.href = "/menu/search?keyword=" + keyword;
+			} else {
+				alert('키워드를 입력해주세요 🤥')
+			}
+		}
+	</script>
 	
 </body>
 </html>
