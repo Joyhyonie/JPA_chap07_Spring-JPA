@@ -69,6 +69,19 @@ public class MenuController {
 		return "redirect:/menu/list";
 	}
 	
+	/* '메뉴 수정하기'를 위한 화면 전환 */
+	@GetMapping("/modify")
+	public void modifyPage() {}
+	
+	/* 메뉴명 수정하기 */
+	@PostMapping("/modify")
+	public String menuModify(@ModelAttribute MenuDTO menu) {
+		
+		menuService.modifyMenu(menu);
+		
+		/* 수정된 메뉴의 상세페이지로 이동 */
+		return "redirect:/menu/" + menu.getMenuCode();
+	}
 	
 	
 	

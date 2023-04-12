@@ -43,7 +43,7 @@ public class MenuService {
 	/* 모든 메뉴 리스트 조회하기 */
 	public List<MenuDTO> findAllMenu() {
 		
-		/* List<Menu> Menu 객체가 여러 개 있으므로 Stream화 시켜 MenuDTO*/
+		/* List<Menu> Menu 객체가 여러 개 있으므로 Stream화 시켜 MenuDTO */
 		List<Menu> menuList = menuRepository.findAllMenu(entityManager);
 		
 		return menuList.stream().map(menu -> modelMapper.map(menu, MenuDTO.class)).collect(Collectors.toList());
@@ -82,6 +82,12 @@ public class MenuService {
 		menuRepository.registNewMenu(entityManager, modelMapper.map(newMenu, Menu.class));
 	}
 	
+	/* 메뉴명 수정하기 */
+	@Transactional
+	public void modifyMenu(MenuDTO menu) {
+		
+		menuRepository.modifyMenu(entityManager, modelMapper.map(menu, Menu.class));
+	}
 	
 	
 	

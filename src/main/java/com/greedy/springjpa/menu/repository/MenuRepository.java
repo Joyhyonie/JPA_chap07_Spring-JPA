@@ -40,8 +40,20 @@ public class MenuRepository {
 		
 		/* entityManager야, 영속성 컨텍스트에 menu를 저장하고 관리해주렴! */
 		entityManager.persist(menu);
+	}
+	
+	/* 메뉴명 수정하기 */
+	public void modifyMenu(EntityManager entityManager, Menu menu) {
+		
+		/* menu : 클라이언트로부터 입력받은 menuCode와 menuName이 넘어옴 */
+		
+		/* 전달 받은 메뉴 정보를 통해 해당 엔티티를 먼저 조회 */
+		Menu selectedMenu = entityManager.find(Menu.class, menu.getMenuCode());
+		/* 조회된 메뉴 객체를 수정 */
+		selectedMenu.setMenuName(menu.getMenuName());
 		
 	}
+	
 	
 	
 	
