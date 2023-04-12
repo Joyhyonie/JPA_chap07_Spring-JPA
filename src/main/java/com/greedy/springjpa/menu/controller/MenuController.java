@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -58,6 +60,14 @@ public class MenuController {
 		return menuService.findAllCategory();
 	}
 	
+	/* 메뉴 입력하기 */
+	@PostMapping("/regist")
+	public String registNewMenu(@ModelAttribute MenuDTO newMenu) { /* @ModelAttribute는 생략되어도 정상 동작하지만 명시 */
+		
+		menuService.registNewMenu(newMenu);
+		
+		return "redirect:/menu/list";
+	}
 	
 	
 	

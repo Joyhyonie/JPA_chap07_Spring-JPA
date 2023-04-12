@@ -35,6 +35,14 @@ public class MenuRepository {
 		return entityManager.createQuery(jpql, Category.class).getResultList();
 	}
 	
+	/* 메뉴 입력하기 */
+	public void registNewMenu(EntityManager entityManager, Menu menu) {
+		
+		/* entityManager야, 영속성 컨텍스트에 menu를 저장하고 관리해주렴! */
+		entityManager.persist(menu);
+		
+	}
+	
 	
 	
 	

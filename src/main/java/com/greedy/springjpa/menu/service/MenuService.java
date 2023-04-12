@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.greedy.springjpa.menu.dto.CategoryDTO;
 import com.greedy.springjpa.menu.dto.MenuDTO;
@@ -58,10 +59,37 @@ public class MenuService {
 		 */
 	}
 	
+	/* 모든 카테고리 리스트 조회하기 */
 	public List<CategoryDTO> findAllCategory() {
 		
 		List<Category> categoryList = menuRepository.findAllCategory(entityManager);
 		
 		return categoryList.stream().map(category -> modelMapper.map(category, CategoryDTO.class)).collect(Collectors.toList());
 	}
+	
+	
+	/* 스프링에서는 트랜잭션 처리를 지원
+	 * 어노테이션으로 @Transactional을 선언하는 선언적 트랜잭션이 보편적인 방식
+	 * 클래스 레벨과 메소드 레벨에 작성될 수 있고 클래스 레벨에 작성 시 하위 모든 메소드에 적용
+	 * 어노테이션이 선언되면 메소드 호출 시 자동으로 프록시 객체(가로채는 객체)가 생성되며 해당 프록시 객체는 정상 수행 여부에 따라
+	 * commit, rollback 처리를 함 */
+	
+	/* 메뉴 입력하기 */
+	@Transactional
+	public void registNewMenu(MenuDTO newMenu) {
+		
+		/* 이전 방식과는 반대로 MenuDTO를 Menu형태로 변경하여 Menu타입으로 전달 */
+		menuRepository.registNewMenu(entityManager, modelMapper.map(newMenu, Menu.class));
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
